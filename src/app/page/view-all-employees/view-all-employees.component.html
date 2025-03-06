@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header text-center">
+      <h3>Employee List</h3>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive-sm"></div>
+      <table class="table table-bordered table-hover">
+        <thead class="table-danger text-center">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employeeList">
+            <td class="text-center">{{ employee.id }}</td>
+            <td>{{ employee.firstName }} {{ employee.lastName }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.departmentId }}</td>
+            <td>{{ employee.roleId }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

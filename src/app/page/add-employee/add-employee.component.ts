@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
+import { Component, EventEmitter, Injectable, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 @Injectable({ providedIn: 'root' })
 export class AddEmployeeComponent {
   constructor(private http: HttpClient) {}
-
   public employee = {
     firstName: '',
     lastName: '',
@@ -27,8 +26,6 @@ export class AddEmployeeComponent {
   addEmployee() {
     this.http
       .post('http://localhost:8080/employee/add', this.employee)
-      .subscribe((data) => {
-        console.log(data);
-      });
+      .subscribe((data) => {});
   }
 }
