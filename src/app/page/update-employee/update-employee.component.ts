@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  Output,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,19 +19,15 @@ import { FormsModule } from '@angular/forms';
 @Injectable({ providedIn: 'root' })
 export class UpdateEmployeeComponent {
   constructor(private http: HttpClient) {}
-  public employee = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    roleId: '',
-    departmentId: '',
-  };
 
-  public firstName: string = '';
-
+  @Input() employee: any;
+  @Output() updateEvent = new EventEmitter<boolean>();
   updateEmployee() {
     this.http
-      .post('http://localhost:8080/employee/add', this.employee)
-      .subscribe((data) => {});
+      .put('http://localhost:8080/employee/update', this.employee)
+      .subscribe((data) => {
+        console.log(data);
+        this.updateEvent.emit(true);
+      });
   }
 }

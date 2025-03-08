@@ -1,46 +1,58 @@
 <app-nav></app-nav>
 <div class="container mt-5">
-  <div class="card shadow-lg">
-    <div class="card-header text-center">
-      <h3>Employee List</h3>
+  <div class="row g-4">
+    <!-- Form Column -->
+    <div [ngClass]="selectedEmployee ? 'col-md-7' : 'col-md-10'">
+      <div class="card shadow-lg">
+        <div class="card-header text-center">
+          <h3>Employee List</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive-sm">
+            <table class="table table-bordered">
+              <thead class="table-danger text-center">
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Department</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let employee of employeeList">
+                  <td class="text-center">{{ employee.id }}</td>
+                  <td>{{ employee.firstName }} {{ employee.lastName }}</td>
+                  <td>{{ employee.email }}</td>
+                  <td>{{ employee.departmentId }}</td>
+                  <td>{{ employee.roleId }}</td>
+                  <td class="text-center">
+                    <button
+                      class="btn btn-outline-secondary me-2"
+                      (click)="editEmp(employee)"
+                    >
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button
+                      class="btn btn-outline-danger"
+                      (click)="deleteEmp(employee)"
+                    >
+                      <i class="bi bi-trash-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <div class="table-responsive-sm"></div>
-      <table class="table table-bordered">
-        <thead class="table-danger text-center">
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let employee of employeeList">
-            <td class="text-center">{{ employee.id }}</td>
-            <td>{{ employee.firstName }} {{ employee.lastName }}</td>
-            <td>{{ employee.email }}</td>
-            <td>{{ employee.departmentId }}</td>
-            <td>{{ employee.roleId }}</td>
-            <td class="text-center">
-              <button
-                class="btn btn-outline-secondary me-2"
-                (click)="editEmp(employee)"
-              >
-                <i class="bi bi-pencil-square"></i>
-              </button>
-              <button
-                class="btn btn-outline-danger"
-                (click)="deleteEmp(employee)"
-              >
-                <i class="bi bi-trash-fill"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="col-md-5" *ngIf="selectedEmployee">
+      <app-update-employee
+        [employee]="toEditEmp"
+        (updateEvent)="receiveMessage($event)"
+      ></app-update-employee>
     </div>
   </div>
 </div>

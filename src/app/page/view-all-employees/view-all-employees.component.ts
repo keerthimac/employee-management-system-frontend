@@ -3,11 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { NavComponent } from '../../common/nav/nav.component';
+import { UpdateEmployeeComponent } from '../update-employee/update-employee.component';
 
 @Component({
   selector: 'app-view-all-employees',
   standalone: true,
-  imports: [CommonModule, NavComponent],
+  imports: [CommonModule, NavComponent, UpdateEmployeeComponent],
   templateUrl: './view-all-employees.component.html',
   styleUrl: './view-all-employees.component.css',
 })
@@ -16,6 +17,15 @@ export class ViewAllEmployeesComponent {
     this.loadTable();
   }
 
+  selectedEmployee: boolean = false;
+  toEditEmp = {
+    id: 0,
+    firstName: '',
+    lastName: '',
+    email: '',
+    roleId: '',
+    departmentId: '',
+  };
   public employeeList: any;
 
   loadTable() {
@@ -24,7 +34,16 @@ export class ViewAllEmployeesComponent {
     });
   }
 
+  receiveMessage(event: boolean) {
+    if (event) {
+      console.log(event);
+      this.selectedEmployee = false;
+      this.loadTable();
+    }
+  }
+
   deleteEmp(employee: any) {
+    this.selectedEmployee = false;
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
@@ -71,6 +90,14 @@ export class ViewAllEmployeesComponent {
   }
 
   editEmp(employee: any) {
-    alert(employee.id);
+    this.selectedEmployee = !this.selectedEmployee;
+    if (this.selectedEmployee) {
+      this.toEditEmp.id = employee.id;
+      this.toEditEmp.firstName = employee.firstName;
+      this.toEditEmp.lastName = employee.lastName;
+      this.toEditEmp.email = employee.email;
+      this.toEditEmp.roleId = employee.roleId;
+      this.toEditEmp.departmentId = employee.departmentId;
+    }
   }
 }
